@@ -22,16 +22,16 @@ module ExternalId
 
     def add_external_id(external_id_object = nil, provider: nil, id: nil)
       if external_id_object.blank? && provider.blank? && id.blank?
-        raise 'Either ExternalIdValue or provider and id are required'
+        raise 'Either ExternalId::Value or provider and id are required'
       end
 
-      eid = external_id_object.is_a?(::ExternalId::ExternalIdValue) ? external_id_object : ::ExternalId::ExternalIdValue.new(provider: provider, id: id)
+      eid = external_id_object.is_a?(::ExternalId::Value) ? external_id_object : ::ExternalId::Value.new(provider: provider, id: id)
 
       ::ExternalId::ExternalId.find_or_create_by!(provider: eid.provider, external_id: eid.id, resource: self)
     end
 
     def external_id
-      ::ExternalId::ExternalIdValue.from_model(eid)
+      ::ExternalId::Value.from_model(eid)
     end
   end
 end

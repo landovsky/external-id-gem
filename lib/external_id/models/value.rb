@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module ExternalId
-  # ExternalId value object
-  class ExternalIdValue
+  # ID Value value object
+  class Value
     include ActiveModel::Model
     include ActiveModel::Attributes
 
@@ -48,7 +48,7 @@ module ExternalId
     end
 
     def ==(other)
-      return false unless other.is_a?(ExternalIdValue)
+      return false unless other.is_a?(::ExternalId::Value)
 
       provider == other.provider && id == other.id
     end

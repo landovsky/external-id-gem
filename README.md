@@ -88,8 +88,8 @@ customer = Customer.find(123)
 # Option 1: Using keyword arguments
 customer.add_external_id(provider: 'raynet', id: 'R-12345')
 
-# Option 2: Using an ExternalIdValue object
-external_id = ExternalId::ExternalIdValue.new(provider: 'salesforce', id: 'SF-67890')
+# Option 2: Using an ExternalId::Value object
+external_id = ExternalId::Value.new(provider: 'salesforce', id: 'SF-67890')
 customer.add_external_id(external_id)
 ```
 
@@ -111,7 +111,7 @@ Customer.find_by_external_id('unknown', '123')  # => ArgumentError
 ```ruby
 customer = Customer.find(123)
 
-# Returns an ExternalIdValue object
+# Returns an ExternalId::Value object
 external_id = customer.external_id
 
 if external_id.present?
@@ -157,13 +157,13 @@ add_index :external_ids, [:provider, :resource_type, :resource_id],
 
 This ensures that each resource can only have one external ID per provider.
 
-## ExternalIdValue
+## ExternalId::Value
 
-The `ExternalIdValue` class is a value object that provides a clean interface for working with external IDs:
+The `ExternalId::Value` class is a value object that provides a clean interface for working with external IDs:
 
 ```ruby
 # Create a value object
-eid = ExternalId::ExternalIdValue.new(provider: 'raynet', id: '12345')
+eid = ExternalId::Value.new(provider: 'raynet', id: '12345')
 
 # Check presence
 eid.present?  # => true
@@ -179,14 +179,14 @@ eid.to_hash   # => { provider: 'raynet', id: '12345' }
 eid.to_a      # => ['raynet', '12345']
 
 # Create from array
-ExternalId::ExternalIdValue.from_array(['raynet', '12345'])
+ExternalId::Value.from_array(['raynet', '12345'])
 
 # Create blank value
-ExternalId::ExternalIdValue.blank  # => blank instance
+ExternalId::Value.blank  # => blank instance
 
 # Comparison
-eid1 = ExternalId::ExternalIdValue.new(provider: 'raynet', id: '123')
-eid2 = ExternalId::ExternalIdValue.new(provider: 'raynet', id: '123')
+eid1 = ExternalId::Value.new(provider: 'raynet', id: '123')
+eid2 = ExternalId::Value.new(provider: 'raynet', id: '123')
 eid1 == eid2  # => true
 ```
 

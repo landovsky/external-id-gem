@@ -5,7 +5,7 @@
 - Initial release
 - Polymorphic external ID associations for Rails models
 - `ExternalId` model for database-backed storage
-- `ExternalIdValue` value object for clean data handling
+- `ExternalId::Value` value object for clean data handling
 - `WithExternalId` concern for easy model integration
 - Configurable providers with enum support
 - UUID support for distributed systems

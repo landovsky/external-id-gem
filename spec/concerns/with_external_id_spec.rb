@@ -46,10 +46,10 @@ RSpec.describe ExternalId::WithExternalId do
   end
 
   describe '#add_external_id' do
-    context 'when passing ExternalIdValue object' do
-      let(:external_id_value) { ExternalId::ExternalIdValue.new(provider: 'raynet', id: '12345') }
+    context 'when passing ExternalId::Value object' do
+      let(:external_id_value) { ExternalId::Value.new(provider: 'raynet', id: '12345') }
 
-      it 'creates external id from ExternalIdValue object' do
+      it 'creates external id from ExternalId::Value object' do
         expect do
           test_instance.add_external_id(external_id_value)
         end.to change { ExternalId::ExternalId.count }.by(1)
@@ -74,7 +74,7 @@ RSpec.describe ExternalId::WithExternalId do
       end
     end
 
-    context 'when passing non-ExternalIdValue object' do
+    context 'when passing non-ExternalId::Value object' do
       it 'creates external id from provider and id parameters' do
         expect do
           test_instance.add_external_id('some_string', provider: 'raynet', id: '12345')
@@ -108,7 +108,7 @@ RSpec.describe ExternalId::WithExternalId do
       it 'raises an error' do
         expect do
           test_instance.add_external_id
-        end.to raise_error('Either ExternalIdValue or provider and id are required')
+        end.to raise_error('Either ExternalId::Value or provider and id are required')
       end
     end
   end
@@ -121,10 +121,10 @@ RSpec.describe ExternalId::WithExternalId do
         test_instance.eid = external_id
       end
 
-      it 'returns ExternalIdValue from eid' do
+      it 'returns ExternalId::Value from eid' do
         result = test_instance.external_id
 
-        expect(result).to be_a(ExternalId::ExternalIdValue)
+        expect(result).to be_a(ExternalId::Value)
         expect(result.provider).to eq('raynet')
         expect(result.id).to eq('12345')
         expect(result).to be_present
@@ -132,10 +132,10 @@ RSpec.describe ExternalId::WithExternalId do
     end
 
     context 'when eid does not exist' do
-      it 'returns blank ExternalIdValue' do
+      it 'returns blank ExternalId::Value' do
         result = test_instance.external_id
 
-        expect(result).to be_a(ExternalId::ExternalIdValue)
+        expect(result).to be_a(ExternalId::Value)
         expect(result).to be_blank
         expect(result.provider).to be_nil
         expect(result.id).to be_nil
@@ -147,10 +147,10 @@ RSpec.describe ExternalId::WithExternalId do
         test_instance.eid = nil
       end
 
-      it 'returns blank ExternalIdValue' do
+      it 'returns blank ExternalId::Value' do
         result = test_instance.external_id
 
-        expect(result).to be_a(ExternalId::ExternalIdValue)
+        expect(result).to be_a(ExternalId::Value)
         expect(result).to be_blank
       end
     end

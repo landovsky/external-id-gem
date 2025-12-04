@@ -45,16 +45,16 @@ module ExternalId
   end
 
   # Value object for external IDs
-  class ExternalIdValue
+  class Value
     include ActiveModel::Model
     include ActiveModel::Attributes
 
     attr_accessor provider: String?
     attr_accessor id: String?
 
-    def self.blank: () -> ExternalIdValue
-    def self.from_model: (ExternalId?) -> ExternalIdValue
-    def self.from_array: (Array[String?]?) -> ExternalIdValue
+    def self.blank: () -> Value
+    def self.from_model: (ExternalId?) -> Value
+    def self.from_array: (Array[String?]?) -> Value
 
     def initialize: (?provider: String? | Symbol?, ?id: String?) -> void
     def present?: () -> bool
@@ -98,8 +98,8 @@ module ExternalId
     # Instance methods available to including classes
     def eid: () -> ExternalId?
     def eid=: (ExternalId?) -> ExternalId?
-    def add_external_id: (?ExternalIdValue?, ?provider: String? | Symbol?, ?id: String?) -> ExternalId
-    def external_id: () -> ExternalIdValue
+    def add_external_id: (?Value?, ?provider: String? | Symbol?, ?id: String?) -> ExternalId
+    def external_id: () -> Value
 
     # Class methods added to including classes
     module ClassMethods

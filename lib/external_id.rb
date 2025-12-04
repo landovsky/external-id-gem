@@ -5,7 +5,7 @@ require 'active_support'
 
 require_relative 'external_id/version'
 require_relative 'external_id/configuration'
-require_relative 'external_id/models/external_id_value'
+require_relative 'external_id/models/value'
 require_relative 'external_id/models/external_id'
 require_relative 'external_id/concerns/with_external_id'
 

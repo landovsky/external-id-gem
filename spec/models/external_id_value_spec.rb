@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe ExternalId::ExternalIdValue do
+RSpec.describe ExternalId::Value do
   describe '.blank' do
     it 'returns a new blank instance' do
       result = described_class.blank
@@ -238,7 +238,7 @@ RSpec.describe ExternalId::ExternalIdValue do
     context 'when comparing with different class' do
       it 'returns false' do
         instance = described_class.new(provider: 'raynet', id: '12345')
-        other_object = 'not an ExternalIdValue'
+        other_object = 'not an ExternalId::Value'
 
         expect(instance).not_to eq(other_object)
       end
