@@ -17,7 +17,7 @@ A Rails gem that provides a clean, polymorphic way to associate external IDs fro
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'external-id', path: '/Users/tomas/git/gems/external-id'
+gem 'external-id'
 ```
 
 Then execute:
