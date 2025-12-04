@@ -1,0 +1,34 @@
+===============================================================================
+
+ExternalId has been installed!
+
+Next steps:
+
+1. Review and customize the configuration in:
+   config/initializers/external_id.rb
+
+2. Run the migration to create the external_ids table:
+   rails db:migrate
+
+3. Include the concern in your models:
+   
+   class Customer < ApplicationRecord
+     include ExternalId::WithExternalId
+   end
+
+4. Start using external IDs in your application:
+   
+   # Add an external ID to a record
+   customer.add_external_id(provider: 'raynet', id: '12345')
+   
+   # Find a record by external ID
+   customer = Customer.find_by_external_id('raynet', '12345')
+   
+   # Get the external ID value object
+   external_id = customer.external_id
+   external_id.provider  # => 'raynet'
+   external_id.id        # => '12345'
+
+For more information, see: https://github.com/yourusername/external-id
+
+===============================================================================
