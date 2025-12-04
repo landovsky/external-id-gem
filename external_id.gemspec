@@ -10,11 +10,10 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Polymorphic external ID associations for Rails models"
   spec.description = "A Rails gem that provides a clean way to associate external IDs from third-party systems with your ActiveRecord models using polymorphic associations."
-  spec.homepage = "https://github.com/yourusername/external-id"
+  spec.homepage = "https://github.com/landovsky/external-id-gem"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.7.0"
 
-  spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/main/CHANGELOG.md"
 
@@ -31,12 +30,12 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activerecord", ">= 6.0"
-  spec.add_dependency "activesupport", ">= 6.0"
-  spec.add_dependency "railties", ">= 6.0"
+  spec.add_dependency "activerecord", ">= 6.0", "< 9.0"
+  spec.add_dependency "activesupport", ">= 6.0", "< 9.0"
+  spec.add_dependency "railties", ">= 6.0", "< 9.0"
 
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-rails", "~> 6.0"
-  spec.add_development_dependency "sqlite3", ">= 2.1"
+  spec.add_development_dependency "sqlite3", "~> 2.1"
   spec.add_development_dependency "factory_bot", "~> 6.0"
 end
