@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.1] - 2025-12-02
+- add installer for external_id factory
+- fix: copy migration to correct path
+
 ## [0.1.0] - 2025-12-02
 
 - Initial release
