@@ -16,22 +16,13 @@ module ExternalId
         template 'initializer.rb', 'config/initializers/external_id.rb'
       end
 
-      def create_migration
-        migration_template 'migration.rb.tt', File.join(db_migrate_path, 'create_external_ids.rb')
+      def copy_migration
+        @use_uuid = ExternalId.configuration.use_uuid rescue false
+        migration_template 'migration.rb.tt', 'create_external_ids.rb'
       end
 
       def show_readme
         readme 'README' if behavior == :invoke
-      end
-
-      private
-
-      def db_migrate_path
-        if defined?(Rails.application) && Rails.application.config.paths['db/migrate']
-          Rails.application.config.paths['db/migrate'].to_a.first
-        else
-          'db/migrate'
-        end
       end
     end
   end

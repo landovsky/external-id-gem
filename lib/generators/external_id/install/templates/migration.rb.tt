@@ -2,10 +2,10 @@
 
 class CreateExternalIds < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version %>]
   def change
-    create_table :external_ids<%= ', id: :uuid' if ExternalId.configuration.use_uuid %> do |t|
+    create_table :external_ids<%= ', id: :uuid' if @use_uuid %> do |t|
       t.string :provider, null: false, index: true
       t.string :external_id, null: false
-      t.references :resource, polymorphic: true, null: false, index: true<%= ', type: :uuid' if ExternalId.configuration.use_uuid %>
+      t.references :resource, polymorphic: true, null: false, index: true<%= ', type: :uuid' if @use_uuid %>
 
       t.timestamps
     end
