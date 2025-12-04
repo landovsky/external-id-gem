@@ -1,0 +1,113 @@
+# Type signatures for external_id gem
+# See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+# Stub declarations for Rails/ActiveRecord dependencies
+module ActiveModel
+  module Model
+  end
+
+  module Attributes
+  end
+end
+
+module ActiveSupport
+  module Concern
+  end
+end
+
+module ActiveRecord
+  class Base
+  end
+end
+
+module Rails
+  class Railtie
+  end
+end
+
+module ExternalId
+  VERSION: String
+
+  # Module-level configuration methods
+  def self.configuration: () -> Configuration
+  def self.configuration=: (Configuration) -> Configuration
+  def self.configure: () { (Configuration) -> void } -> void
+  def self.reset_configuration!: () -> Configuration
+
+  # Configuration class for the gem
+  class Configuration
+    attr_reader providers: Hash[Symbol, String]
+    attr_accessor base_class: String
+    attr_accessor use_uuid: bool
+
+    def initialize: () -> void
+    def providers=: (Array[String | Symbol] | Hash[Symbol, String]) -> Hash[Symbol, String]
+  end
+
+  # Value object for external IDs
+  class ExternalIdValue
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+
+    attr_accessor provider: String?
+    attr_accessor id: String?
+
+    def self.blank: () -> ExternalIdValue
+    def self.from_model: (ExternalId?) -> ExternalIdValue
+    def self.from_array: (Array[String?]?) -> ExternalIdValue
+
+    def initialize: (?provider: String? | Symbol?, ?id: String?) -> void
+    def present?: () -> bool
+    def blank?: () -> bool
+    def ==: (untyped) -> bool
+    def to_s: () -> String
+    def to_hash: () -> Hash[Symbol, String?]
+    def attributes: () -> Hash[Symbol, String?]
+    def to_a: () -> Array[String?]
+  end
+
+  # ActiveRecord model for storing external IDs
+  class ExternalId < ActiveRecord::Base
+    # Associations
+    def resource: () -> ActiveRecord::Base?
+    def resource=: (ActiveRecord::Base?) -> ActiveRecord::Base?
+
+    # Attributes
+    def provider: () -> String?
+    def provider=: (String?) -> String?
+    def external_id: () -> String?
+    def external_id=: (String?) -> String?
+    def resource_type: () -> String?
+    def resource_type=: (String?) -> String?
+    def resource_id: () -> (String | Integer)?
+    def resource_id=: ((String | Integer)?) -> (String | Integer)?
+
+    # Class methods
+    def self.providers: () -> Hash[Symbol, String]
+    def self.setup_enum!: () -> void
+
+    private
+
+    def set_id_if_needed: () -> void
+  end
+
+  # Concern module for adding external ID support to models
+  module WithExternalId
+    extend ActiveSupport::Concern
+
+    # Instance methods available to including classes
+    def eid: () -> ExternalId?
+    def eid=: (ExternalId?) -> ExternalId?
+    def add_external_id: (?ExternalIdValue?, ?provider: String? | Symbol?, ?id: String?) -> ExternalId
+    def external_id: () -> ExternalIdValue
+
+    # Class methods added to including classes
+    module ClassMethods
+      def find_by_external_id: (String | Symbol, String) -> ActiveRecord::Base?
+    end
+  end
+
+  # Rails Railtie for integration
+  class Railtie < Rails::Railtie
+  end
+end
