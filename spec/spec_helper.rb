@@ -36,7 +36,7 @@ ExternalId.configure do |config|
 end
 
 # Setup enum after configuration
-ExternalId::ExternalId.setup_enum!
+ExternalId::Record.setup_enum!
 
 # Test model
 class TestModel < ActiveRecord::Base
@@ -61,7 +61,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     # Clean up database before each test
-    ExternalId::ExternalId.delete_all
+    ExternalId::Record.delete_all
     TestModel.delete_all
   end
 

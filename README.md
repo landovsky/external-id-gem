@@ -137,7 +137,7 @@ customer_without_eid.external_id.blank?  # => true
 customer = Customer.find(123)
 
 # Access the external_id record directly
-customer.eid  # => ExternalId::ExternalId instance or nil
+customer.eid  # => ExternalId::Record instance or nil
 
 # The association is dependent: :destroy
 # Deleting the customer will also delete the external_id
@@ -208,13 +208,13 @@ class ApplicationRecord < ActiveRecord::Base
 end
 
 # Add custom scopes
-class ExternalId::ExternalId
+class ExternalId::Record
   scope :raynet, -> { where(provider: 'raynet') }
   scope :customers, -> { where(resource_type: 'Customer') }
 end
 
 # Use them
-ExternalId::ExternalId.raynet.customers
+ExternalId::Record.raynet.customers
 ```
 
 ### Handling multiple providers
@@ -251,7 +251,7 @@ end
 To access the audit history of an external ID record:
 
 ```ruby
-external_id_record = ExternalId::ExternalId.find(some_id)
+external_id_record = ExternalId::Record.find(some_id)
 
 # Get all audits for this record
 external_id_record.audits

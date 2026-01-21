@@ -10,7 +10,7 @@ module ExternalId
         # Enable auditing if the audited gem is loaded and configured
         # This runs after initializers so user configuration is available
         if defined?(Audited) && ::ExternalId.configuration.enable_auditing
-          ::ExternalId::ExternalId.audited
+          ::ExternalId::Record.audited
         end
       end
     end

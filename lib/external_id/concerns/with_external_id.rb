@@ -5,7 +5,7 @@ module ExternalId
     extend ActiveSupport::Concern
 
     included do
-      has_one :eid, class_name: 'ExternalId::ExternalId', as: :resource, dependent: :destroy
+      has_one :eid, class_name: 'ExternalId::Record', as: :resource, dependent: :destroy
     end
 
     class_methods do
@@ -16,7 +16,7 @@ module ExternalId
                 "Provider must be one of #{providers.keys}, was '#{provider}'"
         end
 
-        ::ExternalId::ExternalId.find_by(provider: provider, external_id: external_id, resource_type: name)&.resource
+        ::ExternalId::Record.find_by(provider: provider, external_id: external_id, resource_type: name)&.resource
       end
     end
 
@@ -27,7 +27,7 @@ module ExternalId
 
       eid = external_id_object.is_a?(::ExternalId::Value) ? external_id_object : ::ExternalId::Value.new(provider: provider, id: id)
 
-      ::ExternalId::ExternalId.find_or_create_by!(provider: eid.provider, external_id: eid.id, resource: self)
+      ::ExternalId::Record.find_or_create_by!(provider: eid.provider, external_id: eid.id, resource: self)
     end
 
     def external_id

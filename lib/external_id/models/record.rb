@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ExternalId
-  class ExternalId < ActiveRecord::Base
+  class Record < ActiveRecord::Base
     self.table_name = 'external_ids'
 
     belongs_to :resource, polymorphic: true
@@ -36,10 +36,10 @@ module ExternalId
     # Call setup when the class is loaded
     def self.inherited(subclass)
       super
-      subclass.setup_enum! if subclass == ExternalId::ExternalId
+      subclass.setup_enum! if subclass == ExternalId::Record
     end
   end
 end
 
 # Setup enum after configuration
-ExternalId::ExternalId.setup_enum! if defined?(Rails) && Rails.application
+ExternalId::Record.setup_enum! if defined?(Rails) && Rails.application

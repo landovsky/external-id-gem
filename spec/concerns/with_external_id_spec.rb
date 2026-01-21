@@ -52,9 +52,9 @@ RSpec.describe ExternalId::WithExternalId do
       it 'creates external id from ExternalId::Value object' do
         expect do
           test_instance.add_external_id(external_id_value)
-        end.to change { ExternalId::ExternalId.count }.by(1)
+        end.to change { ExternalId::Record.count }.by(1)
 
-        external_id = ExternalId::ExternalId.last
+        external_id = ExternalId::Record.last
         expect(external_id.provider).to eq('raynet')
         expect(external_id.external_id).to eq('12345')
         expect(external_id.resource).to eq(test_instance)
@@ -65,9 +65,9 @@ RSpec.describe ExternalId::WithExternalId do
       it 'creates external id from provider and id parameters' do
         expect do
           test_instance.add_external_id(nil, provider: 'raynet', id: '12345')
-        end.to change { ExternalId::ExternalId.count }.by(1)
+        end.to change { ExternalId::Record.count }.by(1)
 
-        external_id = ExternalId::ExternalId.last
+        external_id = ExternalId::Record.last
         expect(external_id.provider).to eq('raynet')
         expect(external_id.external_id).to eq('12345')
         expect(external_id.resource).to eq(test_instance)
@@ -78,9 +78,9 @@ RSpec.describe ExternalId::WithExternalId do
       it 'creates external id from provider and id parameters' do
         expect do
           test_instance.add_external_id('some_string', provider: 'raynet', id: '12345')
-        end.to change { ExternalId::ExternalId.count }.by(1)
+        end.to change { ExternalId::Record.count }.by(1)
 
-        external_id = ExternalId::ExternalId.last
+        external_id = ExternalId::Record.last
         expect(external_id.provider).to eq('raynet')
         expect(external_id.external_id).to eq('12345')
         expect(external_id.resource).to eq(test_instance)
@@ -95,9 +95,9 @@ RSpec.describe ExternalId::WithExternalId do
       it 'finds and returns the existing external id' do
         expect do
           test_instance.add_external_id(nil, provider: 'raynet', id: '12345')
-        end.not_to change { ExternalId::ExternalId.count }
+        end.not_to change { ExternalId::Record.count }
 
-        external_id = ExternalId::ExternalId.last
+        external_id = ExternalId::Record.last
         expect(external_id.provider).to eq('raynet')
         expect(external_id.external_id).to eq('12345')
         expect(external_id.resource).to eq(test_instance)
