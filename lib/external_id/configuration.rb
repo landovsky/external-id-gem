@@ -2,12 +2,13 @@
 
 module ExternalId
   class Configuration
-    attr_accessor :providers, :base_class, :use_uuid
+    attr_accessor :providers, :base_class, :use_uuid, :enable_auditing
 
     def initialize
       @providers = {}
       @base_class = 'ActiveRecord::Base'
       @use_uuid = true
+      @enable_auditing = true
     end
 
     def providers=(value)

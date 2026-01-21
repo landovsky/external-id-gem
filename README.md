@@ -63,6 +63,11 @@ ExternalId.configure do |config|
 
   # Optional: Use UUID for primary keys (default: true)
   # config.use_uuid = true
+
+  # Optional: Enable auditing with the audited gem (if loaded)
+  # Default: true
+  # Set to false if you don't want ExternalId records to be audited
+  # config.enable_auditing = true
 end
 ```
 
@@ -226,6 +231,47 @@ customer.add_external_id(provider: 'raynet', id: 'R-99999')  # => ActiveRecord::
 # But you can have the same customer in different systems
 # by using a different provider (requires updating the resource)
 # Note: Currently limited to one external_id per resource
+```
+
+### Auditing with the audited gem
+
+If you have the `audited` gem loaded in your application, the `ExternalId` model will automatically track all changes to external ID records. This includes tracking changes to:
+- `provider` attribute
+- `external_id` attribute
+- `resource` polymorphic association
+
+Auditing is enabled by default when the audited gem is present. You can disable it in your initializer:
+
+```ruby
+ExternalId.configure do |config|
+  config.enable_auditing = false
+end
+```
+
+To access the audit history of an external ID record:
+
+```ruby
+external_id_record = ExternalId::ExternalId.find(some_id)
+
+# Get all audits for this record
+external_id_record.audits
+
+# Get the last audit
+external_id_record.audits.last
+
+# Access audit details
+audit = external_id_record.audits.last
+audit.action        # => "create", "update", or "destroy"
+audit.audited_changes # => Hash of changed attributes
+audit.created_at    # => When the change occurred
+audit.user          # => The user who made the change (if set)
+```
+
+Note: Make sure you've run the audited gem's generator to create the `audits` table:
+
+```bash
+rails generate audited:install
+rails db:migrate
 ```
 
 ## Development

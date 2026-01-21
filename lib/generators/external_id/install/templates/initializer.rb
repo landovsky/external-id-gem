@@ -20,4 +20,9 @@ ExternalId.configure do |config|
   # Use UUID for primary keys (recommended for distributed systems)
   # Default: true
   # config.use_uuid = true
+
+  # Enable auditing with the audited gem (if loaded)
+  # Default: true
+  # Set to false if you don't want ExternalId records to be audited
+  # config.enable_auditing = true
 end
